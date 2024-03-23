@@ -1,6 +1,6 @@
 // Define API endpoint URLs
 //const baseUrl = 'http://localhost:3000/api/inventory';
-const baseUrl = 'https://eventry-backend-8.onrender.com';
+const baseUrl = 'https://eventry-backend-9.onrender.com/';
 
 // Function to fetch and display inventory items
 function fetchInventoryItems() {
