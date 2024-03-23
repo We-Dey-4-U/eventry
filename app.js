@@ -11,16 +11,16 @@ function fetchInventoryItems() {
             data.forEach(item => {
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
-                    <td>${item.id}</td>
+                    <td>${item._id}</td>
                     <td>${item.name || ''}</td>
                     <td>${item.description || ''}</td>
                     <td>${item.quantity || ''}</td>
-                    <td>₦${item.price || ''}</td> <!-- Replace $ with ₦ -->
-                    <td>₦${item.total_price || ''}</td> <!-- Replace $ with ₦ -->
+                    <td>₦${item.price || ''}</td>
+                    <td>₦${item.total_price || ''}</td>
                     <td>${item.date || ''}</td>
                     <td>
-                        <button onclick="openUpdateForm(${item.id}, '${item.name}', '${item.description}', ${item.quantity}, ${item.price})">Update</button>
-                        <button onclick="deleteItem(${item.id})">Delete</button>
+                        <button onclick="openUpdateForm('${item._id}', '${item.name}', '${item.description}', ${item.quantity}, ${item.price})">Update</button>
+                        <button onclick="deleteItem('${item._id}')">Delete</button> <!-- Change id to _id -->
                     </td>
                 `;
                 inventoryItemsBody.appendChild(tr);
@@ -29,6 +29,30 @@ function fetchInventoryItems() {
         .catch(error => {
             console.error('Error fetching inventory:', error);
         });
+}
+
+
+
+
+// Function to delete an inventory item
+function deleteItem(itemId) {
+    fetch(`${baseUrl}/${itemId}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => {
+        if (response.ok) {
+            console.log('Inventory item deleted successfully');
+            fetchInventoryItems(); // Refresh inventory list
+        } else {
+            console.error('Error deleting inventory item:', response.statusText);
+        }
+    })
+    .catch(error => {
+        console.error('Error deleting inventory item:', error);
+    });
 }
 
 
